@@ -1,0 +1,20 @@
+# Compiled files
+target/
+*.class
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+
+# Maven logs
+.mvn/
+mvnw
+mvnw.cmd
+
+# OS metadata
+.DS_Store
+Thumbs.db

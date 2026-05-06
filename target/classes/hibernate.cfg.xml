@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+        <!-- PostgreSQL настройки -->
+        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/firstdb</property>
+        <property name="hibernate.connection.username">admin</property>
+        <property name="hibernate.connection.password">1</property>
+
+        <!-- Диалект PostgreSQL -->
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+
+        <!-- Авто-создание/обновление таблиц -->
+        <property name="hibernate.hbm2ddl.auto">update</property>
+
+        <!-- SQL в консоли -->
+        <property name="hibernate.show_sql">true</property>
+
+        <!-- Форматировать SQL -->
+        <property name="hibernate.format_sql">true</property>
+
+        <!-- Маппинг сущности -->
+        <mapping class="com.example.bd.User"/>
+    </session-factory>
+</hibernate-configuration>
