@@ -1,19 +1,19 @@
-package com.example;
+package example;
 
+import example.bd.HibernateUtil;
+import example.bd.User;
+import example.exception.UserNotFoundException;
+import example.service.UserService;
+import example.service.UserServiceDefault;
 import java.util.List;
 import java.util.Scanner;
-   
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.example.bd.HibernateUtil;
-import com.example.bd.User;
-import com.example.dao.UserDAO;
 
 public class Console {
 
     private static final Logger logger = LoggerFactory.getLogger(Console.class);
-    private static final UserDAO userDAO = new UserDAO();
+    private static final UserService userService = new UserServiceDefault();
     private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -45,6 +45,9 @@ public class Console {
                 case 5:
                     deleteUser();
                     break;
+                case 6:
+                    findUsersByName();
+                    break;
                 case 0:
                     running = false;
                     System.out.println("До свидания!");
@@ -64,6 +67,7 @@ public class Console {
         System.out.println("3. Найти пользователя по ID");
         System.out.println("4. Обновить пользователя");
         System.out.println("5. Удалить пользователя");
+        System.out.println("6. Найти пользователей по имени");
         System.out.println("0. Выход");
     }
 
@@ -74,7 +78,7 @@ public class Console {
             scanner.next();
         }
         int result = scanner.nextInt();
-        scanner.nextLine(); // очистка буфера
+        scanner.nextLine();
         return result;
     }
 
@@ -88,7 +92,7 @@ public class Console {
         int age = getIntInput("");
 
         User user = new User(name, email, age);
-        Long id = userDAO.saveUser(user);
+        Long id = userService.createUser(user);
         if (id != null) {
             System.out.println("Пользователь создан с ID: " + id);
             logger.info("Создан пользователь: {}", email);
@@ -99,7 +103,7 @@ public class Console {
 
     private static void showAllUsers() {
         System.out.println("\n--- Список всех пользователей ---");
-        List<User> users = userDAO.getAllUsers();
+        List<User> users = userService.getAllUsers();
         if (users == null || users.isEmpty()) {
             System.out.println("Пользователей нет.");
         } else {
@@ -110,20 +114,22 @@ public class Console {
     private static void findUserById() {
         System.out.println("\n--- Поиск пользователя по ID ---");
         Long id = (long) getIntInput("Введите ID: ");
-        User user = userDAO.getUserById(id);
-        if (user == null) {
-            System.out.println("Пользователь с ID " + id + " не найден.");
-        } else {
+        try {
+            User user = userService.getUserById(id);
             System.out.println(user);
+        } catch (UserNotFoundException e) {
+            System.out.println(e.getMessage());
         }
     }
 
     private static void updateUser() {
         System.out.println("\nОбновление пользователя");
         Long id = (long) getIntInput("Введите ID пользователя для обновления: ");
-        User user = userDAO.getUserById(id);
-        if (user == null) {
-            System.out.println("Пользователь не найден.");
+        User user;
+        try {
+            user = userService.getUserById(id);
+        } catch (UserNotFoundException e) {
+            System.out.println(e.getMessage());
             return;
         }
 
@@ -139,7 +145,7 @@ public class Console {
         int age = getIntInput("");
         if (age > 0) user.setAge(age);
 
-        boolean updated = userDAO.updateUser(user);
+        boolean updated = userService.updateUser(user);
         if (updated) {
             System.out.println("Пользователь обновлён.");
         } else {
@@ -148,13 +154,25 @@ public class Console {
     }
 
     private static void deleteUser() {
-        System.out.println("\n Удаление пользователя");
+        System.out.println("\nУдаление пользователя");
         Long id = (long) getIntInput("Введите ID пользователя для удаления: ");
-        boolean deleted = userDAO.deleteUserById(id);
+        boolean deleted = userService.deleteUser(id);
         if (deleted) {
             System.out.println("Пользователь удалён.");
         } else {
             System.out.println("Пользователь с ID " + id + " не найден.");
+        }
+    }
+
+    private static void findUsersByName() {
+        System.out.println("\n--- Поиск пользователей по имени ---");
+        System.out.print("Введите имя (или часть имени): ");
+        String name = scanner.nextLine();
+        List<User> users = userService.findUsersByName(name);
+        if (users == null || users.isEmpty()) {
+            System.out.println("Пользователи с именем '" + name + "' не найдены.");
+        } else {
+            users.forEach(System.out::println);
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.example.bd;
+package example.bd;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;

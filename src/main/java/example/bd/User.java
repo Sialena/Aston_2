@@ -1,19 +1,13 @@
-package com.example.bd;
-import java.time.LocalDateTime;
+package example.bd;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "Users")
 public class User {
 
-
-    @Id 
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", nullable = false)
     private Long id;
@@ -55,18 +49,14 @@ public class User {
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 
-
     @Override
     public String toString() {
-    return "User{" +
-    "id=" + id +
-    ", name='" + name + '\'' +
-    ", email='" + email + '\'' +
-    ", age='" + age + '\'' +
-    ", createdAt=" + createdAt +
-    '}';
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", age=" + age +
+                ", createdAt=" + createdAt +
+                '}';
     }
-
-
-    
 }
