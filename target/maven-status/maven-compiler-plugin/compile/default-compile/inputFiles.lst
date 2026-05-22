@@ -1,4 +1,7 @@
-C:\Users\CLEAR\java_bd\src\main\java\example\HibernateUtil.java
-C:\Users\CLEAR\java_bd\src\main\java\example\User.java
-C:\Users\CLEAR\java_bd\src\main\java\example\UserDAO.java
+C:\Users\CLEAR\java_bd\src\main\java\example\bd\User.java
+C:\Users\CLEAR\java_bd\src\main\java\example\service\UserService.java
+C:\Users\CLEAR\java_bd\src\main\java\example\service\UserServiceDefault.java
+C:\Users\CLEAR\java_bd\src\main\java\example\dao\UserDAO.java
 C:\Users\CLEAR\java_bd\src\main\java\example\Console.java
+C:\Users\CLEAR\java_bd\src\main\java\example\exception\UserNotFoundException.java
+C:\Users\CLEAR\java_bd\src\main\java\example\bd\HibernateUtil.java
