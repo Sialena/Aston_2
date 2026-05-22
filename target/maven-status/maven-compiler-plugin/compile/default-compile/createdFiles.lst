@@ -1,7 +1,0 @@
-example\bd\HibernateUtil.class
-example\exception\UserNotFoundException.class
-example\Console.class
-example\service\UserServiceDefault.class
-example\bd\User.class
-example\dao\UserDAO.class
-example\service\UserService.class
